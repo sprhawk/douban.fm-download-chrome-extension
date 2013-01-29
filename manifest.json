@@ -1,0 +1,31 @@
+{
+        "name":"豆瓣.FM歌曲下载",
+        "version":"1.0",
+        "manifest_version":2,
+        "icons":{
+                "16":"icon-1.png",
+                "48":"icon48.png",
+                "128":"icon128.png"
+        },
+        "permissions":[
+                "http://douban.fm/*",
+                "http://*.douban.com/*",
+                "webRequest",
+                "tabs"
+        ],
+        "background": {
+                      "scripts":["background.js"]
+        },
+        "page_action": {
+                       "default_title":"我是豆瓣.FM pro",
+                       "default_icon":"icon-1.png"
+        },
+        "content_scripts":[
+                {
+                        "matches":[
+                                "http://douban.fm/*"
+                                ],
+                        "js":["jquery-1.8.3.js", "content_script.js"]
+                }
+        ]
+}
