@@ -28,7 +28,7 @@ function set_download_url(url) {
     if (url) {
         $("#download-anchor").show();
         $("#download-anchor").attr("href", url);
-        var file = document.title.split(' ')[0] + ".mp3";
+        var file = document.title.split('-')[0].trim() + ".mp3";
         $("#download-anchor").attr("download", file);
     }
     else {
@@ -38,6 +38,7 @@ function set_download_url(url) {
 
 chrome.extension.onMessage.addListener(
     function(request, sender, sendResponse) {
+//        console.log(document.title.split('-')[0].trim() + ":" + request.url);
         set_download_url(request.url);
         if (request.download) {
             $("#download-anchor")[0].click();

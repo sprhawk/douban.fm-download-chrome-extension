@@ -7,11 +7,22 @@ function checkForDoubanfm(tabid, changeinfo, tab) {
         _tabid = tabid;
         chrome.pageAction.show(tabid);
         chrome.webRequest.onResponseStarted.addListener(hook_download_url, {urls:["http://douban.fm/*", "http://*.douban.com/*"]});
+/*        chrome.webRequest.onBeforeRequest.addListener(function(details) {
+                                                          send_download_url(null, false);
+                                                      }, 
+                                                      {urls:["http://douban.fm/*", "http://*.douban.com/*"]});
+*/
+        chrome.tabs.onRemoved.addListener(function(tabid, removeInfo) {
+                                              if (_tabid == tabid) {
+                                                  console.log("onRemoved");
+                                                  _tabid = null;
+                                                  chrome.pageAction.hide(tabid);
+                                                  chrome.webRequest.onResponseStarted.removeListener(hook_download_url);
+                                              }
+                                          });
     }
     else {
-        _tabid = null;
-        chrome.pageAction.hide(tabid);
-        chrome.webRequest.onResponseStarted.removeListener(hook_download_url);
+        console.log("clear out");
     }
 }
 
@@ -32,15 +43,24 @@ function hook_download_url(details) {
 function send_download_url(url, download) {
     var tabid = _tabid;
     if (tabid) {
-        var re=/http:\/\/.+\.douban\.com\/.+\/.+.mp3(\?.*)?$/;
-        if(re.test(url)) {
-            chrome.tabs.sendMessage(tabid, 
-                                    {url:url, 
-                                    download:download} );
-            _url = url;
+        if (url) {
+            var re=/http:\/\/.+\.douban\.com\/.+\/.+.mp3(\?.*)?$/;
+            if(re.test(url)) {
+//                console.log(url);
+                _url = url;
+                chrome.tabs.sendMessage(tabid, 
+                                        {url:_url, 
+                                         download:download} );
+            }
+            else {
+                _url = null;
+            }
         }
         else {
-            _url = null;
+/*            chrome.tabs.sendMessage(tabid, 
+                                   {url:null,
+                                   download:false});
+*/
         }
     }
 }

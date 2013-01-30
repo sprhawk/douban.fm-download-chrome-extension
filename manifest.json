@@ -1,6 +1,6 @@
 {
         "name":"豆瓣.FM歌曲下载",
-        "version":"1.0",
+        "version":"1.0.1",
         "manifest_version":2,
         "icons":{
                 "16":"icon-1.png",
