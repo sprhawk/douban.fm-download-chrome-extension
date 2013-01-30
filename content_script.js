@@ -26,10 +26,25 @@ function set_download_url(url) {
         $("#fm-section2").prepend(dl_section);
     }    
     if (url) {
-        $("#download-anchor").show();
-        $("#download-anchor").attr("href", url);
+        var a = $("#download-anchor");
+        a.show();
+        a.attr("href", url);
         var file = document.title.split('-')[0].trim() + ".mp3";
-        $("#download-anchor").attr("download", file);
+        a.attr("download", file);
+
+        var i = url.lastIndexOf('/');
+        var s = url.substring(i + 1);
+        var r = /.+?(_(.+))?\..{3,4}/;
+        var result = r.exec(s);
+        var j = result[2];
+        if (j) {
+            a.html("下载这首歌(" + j + "kbps)");
+        }
+        else {
+            a.html("下载这首歌");
+        }
+
+        
     }
     else {
         $("#download-anchor").hide();
