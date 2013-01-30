@@ -2,6 +2,7 @@
         "name":"豆瓣.FM歌曲下载",
         "version":"1.0.1",
         "manifest_version":2,
+        "description":"在听豆瓣.fm(http://douban.fm)时，下载当前的歌曲。https://github.com/sprhawk/douban.fm-download-chrome-extension",
         "icons":{
                 "16":"icon-1.png",
                 "48":"icon48.png",
