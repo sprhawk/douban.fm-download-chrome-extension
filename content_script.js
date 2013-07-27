@@ -29,7 +29,8 @@ function set_download_url(url) {
         var a = $("#download-anchor");
         a.show();
         a.attr("href", url);
-        var file = document.title.split('-')[0].trim() + ".mp3";
+        var title = document.title.split('-')[0].trim() ;
+        var file = title + ".mp3";
         a.attr("download", file);
 
         var i = url.lastIndexOf('/');
@@ -38,10 +39,10 @@ function set_download_url(url) {
         var result = r.exec(s);
         var j = result[2];
         if (j) {
-            a.html("下载这首歌(" + j + "kbps)");
+            a.html("下载《" + title + "》(" + j + "kbps)");
         }
         else {
-            a.html("下载这首歌");
+            a.html("下载《" + title + "》");
         }
 
         
@@ -53,7 +54,7 @@ function set_download_url(url) {
 
 chrome.extension.onMessage.addListener(
     function(request, sender, sendResponse) {
-//        console.log(document.title.split('-')[0].trim() + ":" + request.url);
+        console.log("onMessage: " + document.title.split('-')[0].trim() + ":" + request.url);
         set_download_url(request.url);
         if (request.download) {
             $("#download-anchor")[0].click();
