@@ -27,11 +27,15 @@ function set_download_url(url) {
     }    
     if (url) {
         var a = $("#download-anchor");
-        a.show();
-        a.attr("href", url);
         var title = document.title.split('-')[0].trim() ;
         var file = title + ".mp3";
-        a.attr("download", file);
+        //a.attr("download", file); //新版本的chrome已经不允许非同域名修改download属性
+        a.attr("href", "#");
+        a.show();
+        a.off("click"); //移除上次的binding
+        a.on("click", function() {
+            chrome.runtime.sendMessage({"url": url, "file":file});
+        });
 
         var i = url.lastIndexOf('/');
         var s = url.substring(i + 1);

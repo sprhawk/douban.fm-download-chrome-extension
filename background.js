@@ -66,3 +66,19 @@ function send_download_url(url, download) {
         }
     }
 }
+
+function download_file(url, file) {
+    chrome.downloads.download(
+        {
+            "url": url,
+            "filename": file
+        });
+}
+
+chrome.runtime.onMessage.addListener(function(message) {
+    var url = message["url"];
+    var file = message["file"];
+    if (null != url && null != file) {
+        download_file(url, file);
+    }
+});
