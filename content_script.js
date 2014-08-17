@@ -1,4 +1,5 @@
 function set_download_url(url) {
+    // console.log("set_url:" + url);
     var dl_section = $("#dl-section");
     if(0 == dl_section.length) {
         dl_section = $("<div id=\"dl-section\">");
@@ -26,9 +27,16 @@ function set_download_url(url) {
         $("#fm-section2").prepend(dl_section);
     }    
     if (url) {
+        console.log("url: " + url);
         var a = $("#download-anchor");
         var title = document.title.split('-')[0].trim() ;
-        var file = title + ".mp3";
+        var re = /.+\/.+(\.mp[34]).*/;
+        var result = re.exec(url);
+        var ext = ".mp3"
+        if (result.length > 1) {
+            ext = result[1];
+        }
+        var file = title + ext;
         //a.attr("download", file); //新版本的chrome已经不允许非同域名修改download属性
         a.attr("href", "#");
         a.show();
@@ -37,13 +45,11 @@ function set_download_url(url) {
             chrome.runtime.sendMessage({"url": url, "file":file});
         });
 
-        var i = url.lastIndexOf('/');
-        var s = url.substring(i + 1);
-        var r = /.+?(_(.+))?\..{3,4}/;
-        var result = r.exec(s);
-        var j = result[2];
-        if (j) {
-            a.html("下载《" + title + "》(" + j + "kbps)");
+        re = /.+\/.+_(.+k)(_1v)?.+/;
+        var result = re.exec(url);
+        if (result) {
+            var j = result[1];
+            a.html("下载《" + title + "》(" + j + "bps)");
         }
         else {
             a.html("下载《" + title + "》");
@@ -58,7 +64,7 @@ function set_download_url(url) {
 
 chrome.extension.onMessage.addListener(
     function(request, sender, sendResponse) {
-        console.log("onMessage: " + document.title.split('-')[0].trim() + ":" + request.url);
+        // console.log("onMessage: " + document.title.split('-')[0].trim() + ":" + request.url);
         set_download_url(request.url);
         if (request.download) {
             $("#download-anchor")[0].click();
