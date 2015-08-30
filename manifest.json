@@ -3,7 +3,7 @@
         "version":"1.0.7",
         "manifest_version":2,
         "minimum_chrome_version": "31",
-        "description":"在听豆瓣.fm(http://douban.fm)时，下载当前的歌曲。https://github.com/sprhawk/douban.fm-download-chrome-extension",
+        "description":"在听豆瓣.fm(http://douban.fm)时，下载当前的歌曲。https://github.com/sprhawk/douban.fm-download-chrome-extension  作者豆瓣:http://www.douban.com/people/sprhawk/",
         "icons":{
                 "16":"icon-1.png",
                 "48":"icon48.png",
