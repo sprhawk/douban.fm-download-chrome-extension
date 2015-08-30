@@ -2,8 +2,8 @@ var _tabid = null;
 var _url = null;
 
 function checkForDoubanfm(tabid, changeinfo, tab) {
-    var re=/http:\/\/douban\.fm\/(\?.+|$)/;
-    // console.log("checkForDoubanfm: " + tab.url);
+    var re=/http:\/\/douban\.fm\/(\?.+|$|#)/;
+    console.log("checkForDoubanfm: " + tab.url);
     if (re.test(tab.url)) {
         _tabid = tabid;
         chrome.pageAction.show(tabid);
@@ -12,7 +12,8 @@ function checkForDoubanfm(tabid, changeinfo, tab) {
                                                       }, 
                                                       {urls:["http://douban.fm/*", "http://*.douban.com/*"]});
 */
-        chrome.webRequest.onResponseStarted.addListener(hook_download_url, {urls:["http://douban.fm/*", "http://*.douban.com/*"]});
+        // chrome.webRequest.onResponseStarted.addListener(hook_download_url, {urls:["http://douban.fm/*", "http://*.douban.com/*", "http://*.doubanio.com/*"]});
+        chrome.webRequest.onResponseStarted.addListener(hook_download_url, {urls:["http://*.doubanio.com/*"]});
         chrome.tabs.onRemoved.addListener(function(tabid, removeInfo) {
                                               if (_tabid == tabid) {
                                                   console.log("onRemoved");
@@ -34,13 +35,14 @@ chrome.pageAction.onClicked.addListener(function(tab) {
                                             }
                                         });
 
+var hook_re=/http:\/\/.+\.douban(io)?\.com\/.+\/.+.mp[34](\?.*)?$/;
 /*
  * 拦截网络请求地址，把mp3的地址保存下来，然后把地址通过消息发送到content_script.js
  */
 function hook_download_url(details) {
-    var re=/http:\/\/.+\.douban\.com\/.+\/.+.mp[34](\?.*)?$/;
     var url = details.url;
-    if(re.test(url)) {
+    console.log("test hook:", url);
+    if(hook_re.test(url)) {
         if (_url != url) {
             _url = url;
             console.log("hook_download_url:" + details.url);
