@@ -24,7 +24,17 @@ function set_download_url(url) {
         label.html(a);
         
         dl_section.prepend(label);
-        $("#fm-section2").prepend(dl_section);
+        var section = $("#fm-section2");
+        if(section.length > 0) {
+            section.prepend(dl_section);
+        }
+        else {
+            section = $(".playing-info");
+            if(section.length > 0) {
+                section.append(dl_section);
+            }
+        }
+        console.log("section:", section);
     }    
     if (url) {
         console.log("url: " + url);
