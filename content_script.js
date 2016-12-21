@@ -1,41 +1,35 @@
 function set_download_url(url) {
-    // console.log("set_url:" + url);
-    var dl_section = $("#dl-section");
-    if(0 == dl_section.length) {
-        dl_section = $("<div id=\"dl-section\">");
-        dl_section.css("float", "right");
-        dl_section.css("color", "#999");
-        dl_section.css("float", "left");
-        dl_section.css("padding", "10px 0");
-        dl_section.css("display", "inline");
+    console.log("set_url:" + url);
 
-        var label=$("<span id=\"download-song\">");
-        var a = $("<a id=\"download-anchor\">");
-        a.css("background-color", "transparent");
-        a.css("color", "#999");
-        a.hover(function(){
-                    $(this).css("color", "#333333");
+    // create download link
+    var anchor = $("#download-anchor");
 
-                },
-                function() {
-                    $(this).css("color", "#999");
-                });
-        a.html("下载这首歌");
-        label.html(a);
-        
-        dl_section.prepend(label);
-        var section = $("#fm-section2");
-        if(section.length > 0) {
-            section.prepend(dl_section);
-        }
-        else {
-            section = $(".playing-info");
-            if(section.length > 0) {
-                section.append(dl_section);
-            }
-        }
-        console.log("section:", section);
-    }    
+    if(0 == anchor.length) {
+        var anchor = $("<a>");
+        anchor.attr("id", "download-anchor");
+        anchor.text("下载");
+        anchor.css("background-color", "transparent");
+        anchor.css("color", "#999");
+        anchor.css("font-size", "10px");
+        anchor.hover(function(){
+            $(this).css("color", "#333333");
+
+        },
+            function() {
+                $(this).css("color", "#999");
+            });
+
+        var buttons = $(".buttons > div");
+
+        var label = $("<label>");
+        label.attr("title", "download");
+        label.prepend(anchor);
+
+        var span = buttons.children("span").clone();
+        buttons.prepend(span);
+        buttons.prepend(label);
+    }
+
     if (url) {
         console.log("url: " + url);
         var a = $("#download-anchor");
