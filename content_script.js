@@ -25,9 +25,7 @@ function set_download_url(url) {
         label.attr("title", "download");
         label.prepend(anchor);
 
-        var span = buttons.children("span").clone();
-        buttons.prepend(span);
-        buttons.prepend(label);
+        buttons.parent().after(label);
     }
 
     if (url) {
