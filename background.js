@@ -2,7 +2,7 @@ var _tabid = null;
 var _url = null;
 
 function checkForDoubanfm(tabid, changeinfo, tab) {
-    var re=/http[s]?:\/\/fm.douban\.com\/(\?.+|$|#)/;
+    var re=/http[s]?:\/\/(fm\.)?douban\.(com|fm)\/(\?.+|$|#)/;
     // console.log("checkForDoubanfm: " + tab.url);
     if (re.test(tab.url)) {
         console.log("got it: " + tab.url);
