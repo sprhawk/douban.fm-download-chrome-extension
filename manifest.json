@@ -1,7 +1,7 @@
 {
         "name":"豆瓣FM 歌曲下载",
         "short_name":"豆瓣FM 下载",
-        "version":"1.0.11",
+        "version":"1.0.12",
         "manifest_version":2,
         "minimum_chrome_version": "31",
         "description":"在听豆瓣.fm时下载当前歌曲。https://github.com/sprhawk/douban.fm-download-chrome-extension  http://www.douban.com/people/sprhawk/",
@@ -32,7 +32,8 @@
                 {
                         "matches":[
                                 "http://douban.fm/*",
-                                "https://douban.fm/*"
+                                "https://douban.fm/*",
+                                "https://fm.douban.com/*"
                                 ],
                         "js":["jquery-2.2.1.min.js", "content_script.js"]
                 }
